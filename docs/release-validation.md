@@ -15,10 +15,11 @@ Tested on 19 November 2026 on MSI Claw A1M / Ultra 5 135H / MS-1T41, BIOS E1T41I
 - Persistent system service and login sidebar service were enabled. Service restart/reconnect was exercised. A full reboot was not performed during this release work.
 - Allowlisted diagnostics exported successfully, with no tokens, Wi-Fi identifiers or raw journals.
 - The owner opened the installed graphical Setup and Repair application and confirmed that default graphical repair, including authorization, completed successfully.
+- The owner opened the extracted release's A1Daemon-Setup.desktop launcher on the existing Claw installation and confirmed that launcher and install/repair completed successfully.
 
 ## Outstanding / explicit limits
 
-- The installed graphical repair flow passed owner testing. Downloaded-launcher trust prompts and a fresh machine's first installation remain separate from that test.
+- The extracted portable launcher and repair passed owner testing on the existing installation. A fresh machine's first installation remains untested; the exact desktop trust prompt behavior was not separately reported.
 - Resume-triggered saved-profile restore has implementation/unit coverage for preferences, but has not been exercised through a controlled physical suspend with saved settings.
 - Sleep has initial owner-reported success with minimal sample size. No reliable failure rate, overnight drain or S0ix residency claim is made.
 - No repeated reboot/upgrade campaign, independent power measurement, broad game performance matrix or external-controller matrix.

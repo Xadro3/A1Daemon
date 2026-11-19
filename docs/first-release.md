@@ -18,10 +18,12 @@ CachyOS KDE on MSI Claw A1M / Ultra 5 135H is the tested target. Other A1M CPU v
 - [x] Allowlisted support report review/export implemented and report contents inspected.
 - [x] MIT license, security/trust boundary, support matrix, upstream issue review and pinned-action CI added.
 - [x] Installed graphical repair flow confirmed by the owner.
-- [ ] Final clean-source/package/installer checksums and local release commit recorded.
-- [ ] Extracted setup launcher tested by the owner; confirm Desktop Mode/trust prompt instructions.
-- [ ] Repository private vulnerability reporting enabled or the documented fallback retained.
-- [ ] Exact source/assets reviewed and the GitHub prerelease publication approved.
+- [x] Clean source/package/installer reviewed and checksummed; release commit `833a02073e63725335b2cfa22c4772e4ef97c544` passed GitHub CI.
+- [x] Extracted setup launcher and repair confirmed by the owner on the existing Claw installation. Fresh-machine installation and exact trust prompt behavior remain untested.
+- [x] Repository private vulnerability reporting enabled.
+- [x] GitHub prerelease published with all six public asset downloads verified against local hashes.
+
+Published release: https://github.com/Xadro3/A1Daemon/releases/tag/v0.5.0. This validation record was updated after publication; the versioned release assets and tag remain unchanged.
 
 ## Feedback-led validation after the prototype
 
