@@ -1,0 +1,14 @@
+[Unit]
+Description=A1Daemon Steam sidebar
+Documentation=https://github.com/Xadro3/aidaemon
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/a1daemon steam
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=yes
+ExecStop=/usr/bin/a1daemon steam --remove
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,12 @@
+#!/usr/bin/python3 -I
+"""Root-owned installed entry point; ignore user site packages and PYTHONPATH."""
+import importlib
+import sys
+
+sys.path.insert(0, '/usr/lib/a1daemon')
+commands = {'service':'server','steam':'steam','launch':'launch','setup':'setup_gui',
+            'setup-system':'setup_system','diagnostics':'diagnostics','compat':'compat'}
+if len(sys.argv) < 2 or sys.argv[1] not in commands:
+    raise SystemExit('Usage: a1daemon '+ '|'.join(commands))
+command = commands[sys.argv.pop(1)]
+importlib.import_module('a1daemon.' + command).main()

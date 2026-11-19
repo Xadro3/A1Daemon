@@ -1,0 +1,35 @@
+# A1Daemon upstream package recipe. The release builder fills the source checksum.
+pkgname=a1daemon
+pkgver=0.5.0
+pkgrel=1
+pkgdesc='MSI Claw A1M power, RGB, telemetry and independent Steam sidebar (prototype)'
+arch=('any')
+url='https://github.com/Xadro3/aidaemon'
+license=('MIT')
+depends=('python' 'kdialog' 'polkit' 'systemd')
+optdepends=('inputplumber: existing controller management')
+install=a1daemon.install
+source=("a1daemon-$pkgver.tar.gz")
+sha256sums=('@SOURCE_SHA256@')
+
+check() {
+  cd "$srcdir/a1daemon-$pkgver"
+  python -m unittest discover -s tests -v
+}
+
+package() {
+  cd "$srcdir/a1daemon-$pkgver"
+  install -dm755 "$pkgdir/usr/lib/a1daemon/a1daemon" "$pkgdir/usr/share/a1daemon/web" "$pkgdir/usr/share/a1daemon/steam"
+  install -m644 a1daemon/*.py "$pkgdir/usr/lib/a1daemon/a1daemon/"
+  install -m644 web/* "$pkgdir/usr/share/a1daemon/web/"
+  install -m644 steam/adapter.js "$pkgdir/usr/share/a1daemon/steam/"
+  install -Dm755 packaging/a1daemon "$pkgdir/usr/bin/a1daemon"
+  install -Dm644 packaging/system/a1daemon.service "$pkgdir/usr/lib/systemd/system/a1daemon.service"
+  install -Dm644 packaging/user/a1daemon-steam.service "$pkgdir/usr/lib/systemd/user/a1daemon-steam.service"
+  install -Dm644 packaging/a1daemon.desktop "$pkgdir/usr/share/applications/a1daemon.desktop"
+  install -Dm644 packaging/a1daemon-setup.desktop "$pkgdir/usr/share/applications/a1daemon-setup.desktop"
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/a1daemon/LICENSE"
+  install -Dm644 README.md "$pkgdir/usr/share/doc/a1daemon/README.md"
+  install -m644 docs/*.md "$pkgdir/usr/share/doc/a1daemon/"
+  install -m644 SECURITY.md THIRD_PARTY.md CONTRIBUTING.md CHANGELOG.md "$pkgdir/usr/share/doc/a1daemon/"
+}

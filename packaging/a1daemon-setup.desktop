@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=A1Daemon Setup and Repair
+Comment=Install, repair or remove A1Daemon integration
+Exec=a1daemon setup
+Icon=preferences-system
+Categories=Settings;HardwareSettings;
+Terminal=false

@@ -1,0 +1,9 @@
+# Captures contain device identifiers and local diagnostic logs.
+baselines/**/system.txt
+baselines/**/privileged.txt
+__pycache__/
+*.pyc
+dist/
+.release/
+baselines/
+artifacts/

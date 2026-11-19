@@ -1,0 +1,13 @@
+[project]
+name = "a1daemon"
+version = "0.5.0"
+description = "MSI Claw A1M controls, telemetry and an independent Steam sidebar adapter"
+requires-python = ">=3.11"
+license = "MIT"
+
+[project.urls]
+Repository = "https://github.com/Xadro3/aidaemon"
+Issues = "https://github.com/Xadro3/aidaemon/issues"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

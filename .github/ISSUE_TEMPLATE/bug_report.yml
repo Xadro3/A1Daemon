@@ -1,0 +1,42 @@
+name: Bug report
+description: Report a problem with A1Daemon on an MSI Claw A1M.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: "Please remove passwords, bearer tokens, Wi-Fi names, serial numbers and personal account details from any logs."
+  - type: input
+    id: version
+    attributes:
+      label: A1Daemon version
+      description: Include whether this is a release or a development build.
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: Device and operating system
+      placeholder: "Claw A1M, Ultra 5 135H, CachyOS KDE"
+    validations:
+      required: true
+  - type: textarea
+    id: versions
+    attributes:
+      label: Relevant versions
+      description: Kernel, BIOS, Steam client and controller service/version if available.
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps, expected result and actual result
+    validations:
+      required: true
+  - type: textarea
+    id: sleep
+    attributes:
+      label: Sleep or power details, if relevant
+      description: AC or battery, sleep duration, successful/failed cycle counts, Wi-Fi, controller, audio and fan behaviour.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Reviewed diagnostic details
+      description: Paste only relevant, redacted output or attach a screenshot.

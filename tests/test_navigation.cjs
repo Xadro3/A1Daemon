@@ -1,0 +1,36 @@
+const assert=require('node:assert/strict');
+const {create}=require('../web/navigation.js');
+const events=[];
+const doc={activeElement:null,visibilityState:'visible',hasFocus:()=>false,addEventListener:()=>{}};
+function control(tag,properties={}) {
+  const classes=new Set();
+  return {tagName:tag,disabled:false,hidden:false,getClientRects:()=>[{}],classList:{add:c=>classes.add(c),remove:c=>classes.delete(c),contains:c=>classes.has(c)},focus(){doc.activeElement=this;},scrollIntoView(){this.scrolled=true;},dispatchEvent(e){events.push(e.type);},click(){this.clicked=(this.clicked||0)+1;},...properties};
+}
+const tab=control('BUTTON'),hidden=control('BUTTON',{hidden:true}),disabled=control('BUTTON',{disabled:true});
+const slider=control('INPUT',{type:'range',value:'18',min:'6',max:'28',step:'1'});
+const select=control('SELECT',{selectedIndex:0,options:[{},{}]});
+const check=control('INPUT',{type:'checkbox'}),colour=control('INPUT',{type:'color'});
+const controls=[tab,hidden,disabled,slider,select,check,colour];
+doc.querySelectorAll=selector=>selector==='.controller-focus'?controls.filter(e=>e.classList.contains('controller-focus')):controls;
+doc.querySelector=()=>tab;
+let polls=0;
+const win={Event:class{constructor(type){this.type=type;}},addEventListener:()=>{},requestAnimationFrame:()=>polls++,navigator:{getGamepads:()=>{throw Error('Sidebar must not poll Gamepad API');}}};
+const nav=create(doc,win,{sidebar:true,bridge:'private-channel'});
+nav.install();assert.equal(polls,0);
+const message=(action,extra={})=>nav.message({origin:'https://steamloopback.host',data:{type:'a1daemon-navigation',channel:'private-channel',action},...extra});
+message('down');assert.equal(doc.activeElement,null,'input ignored before Steam focus');
+message('focus',{origin:'https://untrusted.example'});assert.equal(doc.activeElement,null);
+message('focus',{data:{type:'a1daemon-navigation',channel:'wrong',action:'focus'}});assert.equal(doc.activeElement,null);
+message('focus');assert.equal(nav.current(),tab);assert(tab.classList.contains('controller-focus'));
+assert.equal(doc.activeElement,null,'native focus remains in Steam rather than entering the iframe');
+message('down');assert.equal(nav.current(),slider,'hidden and disabled controls skipped');
+message('right');assert.equal(slider.value,'19');assert.deepEqual(events.slice(-2),['input','change']);
+slider.value='28';message('right');assert.equal(slider.value,'28');
+message('down');message('right');assert.equal(select.selectedIndex,1);assert.equal(events.at(-1),'change');
+message('down');message('activate');assert.equal(check.clicked,1);
+nav.keydown({key:'Enter',repeat:true,preventDefault(){}});assert.equal(check.clicked,1,'held A/Enter must not repeat activation');
+message('down');assert.equal(nav.current(),colour);message('activate');assert.equal(nav.current(),tab,'colour A goes to next navigable channel/control');
+message('blur');message('down');assert.equal(doc.activeElement,null,'input ignored after Steam blur');
+assert(!tab.classList.contains('controller-focus'));
+create(doc,win,{sidebar:false}).install();assert.equal(polls,1,'standalone retains Gamepad API support');
+console.log('Navigation fixtures passed: native message origin/channel/focus gating, D-pad movement, range clamping, select changes, activation, repeat suppression and standalone fallback');

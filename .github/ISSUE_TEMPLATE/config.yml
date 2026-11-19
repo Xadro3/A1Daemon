@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Support matrix and known limitations
+    url: https://github.com/Xadro3/aidaemon/blob/main/docs/support-matrix.md
+    about: Check the 0.5 prototype target before reporting compatibility issues.

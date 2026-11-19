@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=A1Daemon Claw Control
+Comment=Power, lighting and telemetry for MSI Claw A1M
+Exec=a1daemon launch
+Icon=preferences-system-power-management
+Categories=Settings;HardwareSettings;
+Terminal=false

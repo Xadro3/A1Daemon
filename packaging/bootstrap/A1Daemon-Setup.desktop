@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=A1Daemon 0.5 Setup
+Comment=Install the MSI Claw A1M prototype
+Exec=python3 -c "import pathlib,runpy,sys,urllib.parse; p=urllib.parse.urlparse(sys.argv[1]); runpy.run_path(str(pathlib.Path(urllib.parse.unquote(p.path) if p.scheme else sys.argv[1]).resolve().parent/'setup.py'),run_name='__main__')" %k
+Icon=preferences-system
+Terminal=false
+Categories=Settings;

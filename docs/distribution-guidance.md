@@ -1,0 +1,12 @@
+# Distribution and Linux integration review — 0.5.0
+
+Reviewed 19 November 2026. These are implementation choices based on published guidance, not certifications or endorsements. There is no universal distro approval process for this Steam sidebar technique.
+
+| Guidance | 0.5.0 application |
+| --- | --- |
+| [CachyOS package repository](https://github.com/CachyOS/CachyOS-PKGBUILDS) uses PKGBUILDs; [Arch package guidelines](https://wiki.archlinux.org/title/Arch_package_guidelines) describe package ownership, dependencies and install layout | A reproducible source archive and normal makepkg recipe; package-managed /usr files, explicit dependencies and MIT license. No makepkg as root or remote shell pipeline. Services are enabled through setup rather than silently by package installation. |
+| [Bazzite software guidance](https://docs.bazzite.gg/Installing_and_Managing_Software/software-intro/) prefers Flatpak for GUI applications and describes host package layering as a last resort | 0.5 does not claim Bazzite support or layer a package into its image. Its installer refuses non-CachyOS/OSTree hosts. A future Bazzite host helper needs its own integration and testing; a Flatpak UI alone does not grant host RAPL access. |
+| [Valve Desktop FAQ](https://help.steampowered.com/en/faqs/view/671A-4453-E8D2-323C) recommends Discover/Flatpak and explains the read-only base; [Steamworks FAQ](https://partner.steamgames.com/doc/steamhardware/steamdeck/faq) describes the OS model | No disabling read-only protection, installing Arch packages into SteamOS, claiming Steam Deck verification, or describing CEF injection as an official plugin interface. SteamOS installation is deferred. |
+| [XDG Base Directory Specification](https://specifications.freedesktop.org/basedir/) and [systemd execution/service controls](https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html) | User setup state under XDG_STATE_HOME, runtime token under /run, system state under /var/lib, explicit system/user units, polkit setup authorization and bounded capabilities. |
+
+Setup only writes documented, application-owned files and selected board-scoped sysfs settings. It does not take ownership of the controller stack, update kernels/drivers, edit boot arguments, disable Secure Boot or restart Steam automatically. See SECURITY.md for the complete trust boundary and root operations. Where a guideline applies to ordinary desktop applications but not to a privileged hardware service, that distinction is stated rather than claiming full sandbox compatibility.

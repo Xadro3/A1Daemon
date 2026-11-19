@@ -1,0 +1,5 @@
+pre_remove() {
+  if [[ -f /etc/a1daemon/install.json ]]; then
+    /usr/bin/a1daemon setup-system remove || return 1
+  fi
+}
